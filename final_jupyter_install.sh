@@ -4,6 +4,20 @@ set -e
 
 ENV_NAME="sysml-env"
 SYSML_VERSION="0.48.0"
+MINICONDA_VERSION="Miniconda3-latest-Linux-x86_64.sh"
+
+if command -v conda &> /dev/null; then
+    echo "Conda is already installed, skipping Step 0"
+else
+    echo "--- Step 0: Installing Miniconda ---"
+
+    wget https://repo.anaconda.com/miniconda/$MINICONDA_VERSION
+    chmod +x $MINICONDA_VERSION
+    ./$MINICONDA_VERSION
+
+    echo 'export PATH="$HOME/miniconda3/bin/:$PATH"' >> ~/.bashrc
+    source ~/.bashrc
+fi
 
 echo "--- Step 1: Creating Conda environment '$ENV_NAME' ---"
 conda create -n "$ENV_NAME" python=3.9 -y
@@ -43,3 +57,4 @@ echo "--- ✅ Installation complete! ---"
 echo "Activate with: conda activate $ENV_NAME"
 echo "Then run: jupyter lab"
 echo "📌 Note: No UI extension for SysML is installed; use the 'SysML' kernel in the Launcher to run .sysml cells."
+
