@@ -1,0 +1,95 @@
+= SysML Jupyter Installation for Ubuntu 24.04
+
+== Understanding the Key Changes
+
+The original SysML installation script has several limitations when running on modern Ubuntu 24.04 systems. The improvements provided in the patch file and START script address these issues to create a more consistent and reliable installation process.
+
+=== Key Improvements in the Patched Installation Script
+
+The `delta-of-install-sh.patch` shows critical changes that make the installation more robust:
+
+1. **Standalone Installation**: Added Miniconda installation step (Step 0)
+   * Original script assumed Conda was already installed
+   * New script checks for Conda and installs it if missing
+   * Ensures consistent Python environment across installations
+
+2. **Dedicated Environment**: Creates isolated `sysml-env` conda environment
+   * Original script modified the base environment
+   * New approach prevents conflicts with existing Python packages
+   * Makes installation more reproducible and easier to troubleshoot
+
+3. **Removed Java Dependency**:
+   * Original script required Java 11+
+   * New script eliminates this dependency, simplifying installation
+   * Reduces setup complexity and potential failure points
+
+4. **Explicit Python Version**:
+   * Specifies Python 3.9 instead of generic Python 3.*
+   * Provides consistent behavior across installations
+
+5. **Improved JupyterLab Configuration**:
+   * Added proper code cell configuration with line numbers and code folding
+   * Uses Python script embedded directly in bash for better portability
+   * Ensures consistent development experience
+
+6. **Eliminated UI Extension Requirement**:
+   * Original script installed the JupyterLab SysML extension
+   * New approach uses only the kernel, reducing complexity
+   * Better compatibility with modern JupyterLab versions
+
+== The START-Jupyter_SysML.sh Helper Script
+
+The `START-Jupyter_SysML.sh` script provides essential environment validation and streamlines the Jupyter startup process on Ubuntu 24.04:
+
+1. **Environment Validation**:
+   * Checks if user is in the correct conda environment (`sysml-env`)
+   * Verifies that the SysML kernel is properly installed
+   * Provides helpful commands to fix environment issues if detected
+
+2. **Network Configuration**:
+   * Automatically detects available network interfaces
+   * Configures Jupyter to bind to the correct network interface
+   * Makes the notebook accessible from other machines on the network
+   * Uses dynamic IP detection instead of hardcoded values
+
+3. **Reference Commands**:
+   * Includes commands to verify kernel installation
+   * Shows how to examine kernel configuration files
+   * Provides reinstallation commands if needed
+
+== Implementation Guide for Ubuntu 24.04
+
+To leverage these improvements on Ubuntu 24.04:
+
+1. **Apply the patch or use final script**:
+   * Either apply the patch: `patch install.sh < delta-of-install-sh.patch`
+   * Or use the provided `final_jupyter_install.sh` directly
+   * Make executable: `chmod +x final_jupyter_install.sh`
+   * Run: `./final_jupyter_install.sh`
+
+2. **Use the START script for validation and launching**:
+   * Make executable: `chmod +x START-Jupyter_SysML.sh`
+   * Run: `./START-Jupyter_SysML.sh`
+   * Follow the on-screen prompts
+
+3. **First-time fixes**:
+   * If prompted to run `conda init`, do so and restart your terminal
+   * If kernel is missing, the START script will show the exact command to reinstall it
+
+== Why These Changes Matter for Ubuntu 24.04
+
+Ubuntu 24.04 introduces several changes that can impact SysML installation:
+
+1. Python package compatibility issues with newer system libraries
+   * Isolated conda environment prevents these conflicts
+
+2. Network interface changes in newer Ubuntu versions
+   * Dynamic IP detection in START script ensures proper network binding
+
+3. Java version differences
+   * Removing Java dependency eliminates version compatibility problems
+
+4. Default shell behavior changes
+   * More robust shell handling (`#!/bin/bash` instead of `#!/bin/sh`)
+
+By using the patched installation script and START helper script, you can achieve a more consistent and reliable SysML Jupyter environment on Ubuntu 24.04 systems, avoiding the common provisioning issues that occur with the original script.
