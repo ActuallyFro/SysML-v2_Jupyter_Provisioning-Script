@@ -15,7 +15,7 @@ echo "      sysml    /home/jupyter/anaconda3/envs/sysml-env/share/jupyter/kernel
 echo ""
 echo "Look at specific file: \`\$ cat \"\$(jupyter kernelspec list --json | jq -r '.kernelspecs.sysml.resource_dir')/kernel.json\"\`"
 echo ""
-echo "    Else -- run: conda install \"jupyter-sysml-kernel=0.48.0\" -c conda-forge -y"
+echo "    Else -- run: conda install \"jupyter-sysml-kernel=0.50.0\" -c conda-forge -y"
 echo ""
 echo "3) To activate this environment, use"
 echo ""
