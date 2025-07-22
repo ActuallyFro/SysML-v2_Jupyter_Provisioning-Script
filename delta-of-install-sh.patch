@@ -21,7 +21,7 @@
  set -e
  
 +ENV_NAME="sysml-env"
- SYSML_VERSION="0.48.0"
+ SYSML_VERSION="0.50.0"
 +MINICONDA_VERSION="Miniconda3-latest-Linux-x86_64.sh"
 +
 +if command -v conda &> /dev/null; then
